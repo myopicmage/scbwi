@@ -1,0 +1,26 @@
+﻿/*$primary-color: ;
+$secondary-color: ;*/
+
+@mixin info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bcdff1;
+}
+
+@mixin success {
+    background-color: #dff0d8;
+    border-color: #d0e9c6;
+    color: #3c763d;
+}
+
+@mixin warning {
+    background-color: #fcf8e3;
+    border-color: #faf2cc;
+    color: #8a6d3b;
+}
+
+@mixin error {
+    background-color: #f2dede;
+    border-color: #ebcccc;
+    color: #a94442;
+}

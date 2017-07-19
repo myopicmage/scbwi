@@ -1,0 +1,35 @@
+﻿.fade-in {
+    animation: fadein .5s;
+}
+
+.slide-in {
+    animation: slidein .5s;
+}
+
+.slide-in-container {
+    overflow: hidden;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slidein {
+    from {
+        opacity: 0;
+        margin-left: 25%;
+        width: 150%;
+    }
+
+    to {
+        opacity: 1;
+        margin-left: 0%;
+        width: 100%;
+    }
+}

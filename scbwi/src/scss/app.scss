@@ -1,0 +1,73 @@
+@import 'variables';
+@import 'animations';
+@import 'notification';
+
+html {
+    min-height: 100%;
+}
+
+body {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: #f4ebff;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:visited {
+    color: #0000EE;
+}
+
+select {
+    height: auto !important;
+}
+
+.main {
+    max-width: 1280px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 20px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, .2);
+}
+
+html, button, input, select, textarea, .pure-g [class *= "pure-u"] {
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+}
+
+.footer {
+    float: right;
+    font-size: .8em;
+    margin-top: 2em;
+}
+
+.flex-contain {
+    display: flex;
+
+    .item {
+        margin: auto 0;
+    }
+}
+
+.no-indent {
+    padding: 0;
+    list-style-type: none;
+
+    li {
+        display: flex;
+        align-items: center;
+
+        .material-icons {
+            margin-right: .25em;
+        }
+    }
+}
+
+.divider {
+    border-bottom: 1px solid #555555;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    width: 80%;
+}

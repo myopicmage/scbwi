@@ -1,0 +1,23 @@
+﻿.notification {
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: .75rem 1.25rem;
+
+    &.info {
+        @include info;
+    }
+
+    &.success {
+        @include success;
+    }
+
+    &.warning {
+        @include warning;
+    }
+
+    &.error {
+        @include error;
+    }
+}

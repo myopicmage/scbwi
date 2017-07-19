@@ -16,6 +16,7 @@ module.exports = env => {
                 constants: path.resolve(__dirname, 'src/constants/'),
                 epics: path.resolve(__dirname, 'src/epics/'),
                 reducers: path.resolve(__dirname, 'src/reducers/'),
+                scss: path.resolve(__dirname, 'src/scss/'),
                 store: path.resolve(__dirname, 'src/store/'),
                 types: path.resolve(__dirname, 'src/types/'),
             }
