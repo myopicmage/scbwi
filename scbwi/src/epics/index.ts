@@ -1,5 +1,14 @@
 import { combineEpics } from 'redux-observable';
 
-export const rootEpic = combineEpics(
+import {
+    fetchBootcampsEpic
+} from './admin';
 
+import {
+    fetchTokenEpic
+} from './register';
+
+export const rootEpic = combineEpics(
+    fetchBootcampsEpic,
+    fetchTokenEpic
 );

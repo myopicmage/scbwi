@@ -8,6 +8,7 @@ import { dismissNotification } from 'actions/admin';
 import { Nav } from './nav';
 import { Home } from './home';
 import { NewEvent } from './newevent';
+import { Bootcamps } from './bootcamps';
 
 interface IAdminProps extends IProps {
     admin: IAdminStore
@@ -44,7 +45,7 @@ export class Admin extends React.Component<IAdminProps, any> {
             <div className="pure-u-15-24 item">
                 <div className={`pure-u-1 notification ${note.level}`}>
                     <div className="pure-u-4-24">
-                        {note.created.toDateString()}
+                        {note.created && note.created.toDateString()}
                     </div>
                     <div className="pure-u-15-24">
                         {note.text}
@@ -73,7 +74,7 @@ export class Admin extends React.Component<IAdminProps, any> {
                 <div className="pure-u-3-4 slide-in-container">
                     <Route exact path="/dashboard" component={Home} />
 
-                    <Route path="/dashboard/events/new" component={NewEvent} />
+                    <Route path="/dashboard/bootcamps" component={Bootcamps} />
                 </div>
             </div>
         );

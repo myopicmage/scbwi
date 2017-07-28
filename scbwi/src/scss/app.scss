@@ -27,7 +27,7 @@ select {
 .main {
     max-width: 1280px;
     margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 20px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, .2);
 }
@@ -47,7 +47,23 @@ html, button, input, select, textarea, .pure-g [class *= "pure-u"] {
     display: flex;
 
     .item {
-        margin: auto 0;
+        flex: 0 1 auto;
+    }
+}
+
+.inline-flex {
+    display: inline-flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+
+    .item {
+        label {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 }
 
@@ -70,4 +86,34 @@ html, button, input, select, textarea, .pure-g [class *= "pure-u"] {
     margin-bottom: 10px;
     padding-bottom: 10px;
     width: 80%;
+}
+
+.register-banner {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.camp-box {
+    box-shadow: 0 0 3px 5px rgba(0, 0, 0, .2);
+    padding: .5em .5em .5em 0;
+    margin: .5em 0;
+    cursor: pointer;
+
+    .header {
+        text-transform: uppercase;
+        font-weight: bold;
+        margin-bottom: .5em;
+    }
+
+    &.selected {
+        @include success;
+    }
+
+    &:hover {
+        background-color: rgba(128, 128, 128, 0.3);
+    }
+
+    &:active {
+        background-color: rgba(128, 128, 128, 0.5);
+    }
 }

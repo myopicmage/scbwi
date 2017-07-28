@@ -28,6 +28,12 @@ export class Nav extends React.Component<any, any> {
                     <li className="divider" />
                     <li>
                         <Icon icon="event" />
+                        <Link to="/dashboard/bootcamps">
+                            Bootcamps
+                        </Link>
+                    </li>
+                    {/*<li>
+                        <Icon icon="event" />
                         <Link to="/dashboard/events">
                             Events
                         </Link>
@@ -38,7 +44,7 @@ export class Nav extends React.Component<any, any> {
                         <Link to="/dashboard/events/new">
                             New Event
                         </Link>
-                    </li>
+                    </li>*/}
                 </ul>
             </div>
         );

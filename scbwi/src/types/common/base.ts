@@ -1,9 +1,9 @@
 ﻿export class Base {
-    id: number;
-    created: Date;
-    createdby: string;
-    modified: Date;
-    modifiedby: string;
+    id?: number;
+    created?: Date;
+    createdby?: string;
+    modified?: Date;
+    modifiedby?: string;
 
     constructor(data) {
         this.id = data.id;
