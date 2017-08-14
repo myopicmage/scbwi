@@ -18,8 +18,7 @@ namespace scbwi.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.0.0-preview2-25794");
+                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
 
             modelBuilder.Entity("scbwi.Models.Database.Bootcamp", b =>
                 {
@@ -68,6 +67,8 @@ namespace scbwi.Migrations
 
                     b.Property<DateTime>("cleared");
 
+                    b.Property<long?>("couponid");
+
                     b.Property<DateTime>("created");
 
                     b.Property<string>("createdby");
@@ -78,6 +79,8 @@ namespace scbwi.Migrations
 
                     b.Property<DateTime>("paid");
 
+                    b.Property<string>("paypalid");
+
                     b.Property<decimal>("subtotal");
 
                     b.Property<decimal>("total");
@@ -85,6 +88,8 @@ namespace scbwi.Migrations
                     b.Property<long?>("userid");
 
                     b.HasKey("id");
+
+                    b.HasIndex("couponid");
 
                     b.HasIndex("userid");
 
@@ -159,6 +164,10 @@ namespace scbwi.Migrations
 
             modelBuilder.Entity("scbwi.Models.Database.BootcampRegistration", b =>
                 {
+                    b.HasOne("scbwi.Models.Database.Coupon", "coupon")
+                        .WithMany()
+                        .HasForeignKey("couponid");
+
                     b.HasOne("scbwi.Models.Database.User", "user")
                         .WithMany()
                         .HasForeignKey("userid");

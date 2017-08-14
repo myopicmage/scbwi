@@ -73,6 +73,7 @@ namespace scbwi {
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddTransient<PasswordHasher<ApplicationUser>>();
+            services.AddTransient<ITotalCalculator, TotalCalculator>();
 
             services.AddMvc().AddJsonOptions(options => {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;

@@ -12,15 +12,14 @@ using System;
 namespace scbwi.Migrations
 {
     [DbContext(typeof(ScbwiContext))]
-    [Migration("20170726213156_initial")]
-    partial class initial
+    [Migration("20170814175708_snapshot")]
+    partial class snapshot
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.0.0-preview2-25794");
+                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
 
             modelBuilder.Entity("scbwi.Models.Database.Bootcamp", b =>
                 {
@@ -38,6 +37,8 @@ namespace scbwi.Migrations
                     b.Property<string>("createdby");
 
                     b.Property<DateTime>("date");
+
+                    b.Property<string>("description");
 
                     b.Property<string>("location");
 
@@ -67,6 +68,8 @@ namespace scbwi.Migrations
 
                     b.Property<DateTime>("cleared");
 
+                    b.Property<long?>("couponid");
+
                     b.Property<DateTime>("created");
 
                     b.Property<string>("createdby");
@@ -77,6 +80,8 @@ namespace scbwi.Migrations
 
                     b.Property<DateTime>("paid");
 
+                    b.Property<string>("paypalid");
+
                     b.Property<decimal>("subtotal");
 
                     b.Property<decimal>("total");
@@ -84,6 +89,8 @@ namespace scbwi.Migrations
                     b.Property<long?>("userid");
 
                     b.HasKey("id");
+
+                    b.HasIndex("couponid");
 
                     b.HasIndex("userid");
 
@@ -158,6 +165,10 @@ namespace scbwi.Migrations
 
             modelBuilder.Entity("scbwi.Models.Database.BootcampRegistration", b =>
                 {
+                    b.HasOne("scbwi.Models.Database.Coupon", "coupon")
+                        .WithMany()
+                        .HasForeignKey("couponid");
+
                     b.HasOne("scbwi.Models.Database.User", "user")
                         .WithMany()
                         .HasForeignKey("userid");
