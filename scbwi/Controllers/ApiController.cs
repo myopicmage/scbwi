@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Braintree;
 using scbwi.Models;
+using scbwi.Models.Database;
 using Microsoft.Extensions.Options;
 
 namespace scbwi.Controllers {
@@ -34,8 +33,6 @@ namespace scbwi.Controllers {
             }
         }
 
-        public async Task<IActionResult> Register([FromBody] BootcampRegisration r) {
-            return Json(true);
-        }
+        public IActionResult Register([FromBody] BootcampRegistration r) => Json(true);
     }
 }

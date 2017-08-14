@@ -1,4 +1,5 @@
 ﻿import * as React from 'react';
+import { Redirect } from 'react-router-dom';
 
 export class Home extends React.Component<any, any> {
     constructor(props) {
@@ -6,10 +7,6 @@ export class Home extends React.Component<any, any> {
     }
 
     render() {
-        return (
-            <div className="pure-u-1">
-                i am a home
-            </div>
-        );
+        return <Redirect to={{ pathname: '/register' }} />;
     }
 }
