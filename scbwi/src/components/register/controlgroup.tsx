@@ -27,7 +27,7 @@ export class ControlGroup extends React.Component<ControlGroupProps, any> {
       case 'radio':
         return this.props.options ? this.props.options.map((item, index) => 
           <label htmlFor={item.key} className="pure-radio" key={index}>
-            <input type="radio" id={item.key} name={this.props.name} onChange={this.props.handleChange} value={item.value} /> {item.label}
+            <input type="radio" id={item.key} name={this.props.name} onClick={this.props.handleChange} value={item.value} /> {item.label}
           </label>
         ) : <div>unable to load question</div>;
       case 'select':

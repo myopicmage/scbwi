@@ -9,6 +9,9 @@
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="src\components\register\success.tsx" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="braintree" Version="3.8.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.0" />
@@ -24,5 +27,8 @@
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="src\components\register\success.tsx" />
   </ItemGroup>
 </Project>
