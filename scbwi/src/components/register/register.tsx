@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import { IProps, IRegisterStore } from 'types/redux';
-import { fetchBootcamps, setUserInfo, setRegistrationInfo, submitCoupon, getToken } from 'actions/register';
+import { fetchBootcamps, setUserInfo, setRegistrationInfo, submitCoupon, getToken, register } from 'actions/register';
 import { ControlGroup } from './controlgroup';
 import { MDown } from 'components/common';
 import * as braintree from 'braintree-web';
@@ -14,6 +14,10 @@ interface RegisterProps {
 export class Register extends React.Component<RegisterProps & IProps, any> {
     constructor(props) {
         super(props);
+
+        this.state = {
+            disabled: true
+        };
     }
 
     componentDidMount() {
@@ -37,15 +41,20 @@ export class Register extends React.Component<RegisterProps & IProps, any> {
 
     calcTotal = (event: React.MouseEvent<HTMLButtonElement>): void => {
         const { dispatch } = this.props;
+        const toSubmit = {
+            ...this.props.register.registration,
+            user: this.props.register.user,
+            coupon: this.props.register.registration.coupon
+        };
 
-        dispatch(submitCoupon(this.props.register.coupon));
+        dispatch(submitCoupon(toSubmit));
     }
 
     selectBootcamp = (event: React.MouseEvent<HTMLDivElement>): void => {
         const { dispatch } = this.props;
 
         const camp = this.props.register.bootcamps.find(item => item.id === Number(event.currentTarget.id));
-        
+
         if (!camp) return;
 
         if (this.props.register.registration.bootcampid === camp.id) {
@@ -62,7 +71,7 @@ export class Register extends React.Component<RegisterProps & IProps, any> {
         dispatch(setRegistrationInfo('total', price));
     }
 
-    
+
     setupButton = () => {
         const ppbutton = document.getElementById('paypal-button');
 
@@ -77,7 +86,14 @@ export class Register extends React.Component<RegisterProps & IProps, any> {
             braintree.paypal.create({ client: clientInstance }, (err, paypalInstance) => {
                 ppbutton.addEventListener('click', () => {
                     if (registration.total === 0) {
-                        //free
+
+                        dispatch(register({
+                            ...registration,
+                            user: this.props.register.user,
+                            coupon: registration.coupon,
+                        }));
+
+                        return;
                     }
 
                     paypalInstance.tokenize({
@@ -85,22 +101,18 @@ export class Register extends React.Component<RegisterProps & IProps, any> {
                         amount: registration.total,
                         currency: 'USD',
                         locale: 'en_US',
-                    },
-                    (err, tokenizationPayload) => {
-                        /*this.setState({ modalText: "PayPal response received. Processing..." });
-
-                        dispatch(register({ ...registration, nonce: tokenizationPayload.nonce }, user,
-                            () => {
-                                router.push({
-                                    pathname: '/register/6'
-                                });
-                            },
-                            () => {
-                                console.log('failure??');
-                            })
-                        );*/
+                    }, (err, tokenizationPayload) => {
+                        dispatch(register({
+                            ...registration,
+                            user: this.props.register.user,
+                            coupon: registration.coupon,
+                            nonce: tokenizationPayload.nonce
+                        }));
                     });
+
                 });
+
+                this.setState({ disabled: false });
             });
         });
     }
@@ -115,8 +127,8 @@ export class Register extends React.Component<RegisterProps & IProps, any> {
                 </div>
             );
         } else if (register.bootcamps.length > 0) {
-            return register.bootcamps.filter(item => new Date(item.date).getDate() === day).map((item, index) => 
-                <div 
+            return register.bootcamps.filter(item => new Date(item.date).getDate() === day).map((item, index) =>
+                <div
                     className={`pure-u-1 inline-flex camp-box ${register.registration.bootcampid === item.id ? 'selected' : ''}`} id={item.id ? item.id.toString() : index.toString()}
                     onClick={this.selectBootcamp}
                     key={index}>
@@ -166,7 +178,7 @@ export class Register extends React.Component<RegisterProps & IProps, any> {
                         <fieldset>
                             <legend>Basic Information</legend>
                             <ControlGroup handleChange={this.handleChange} name="member" label="Are you a member?" type="radio" required={true} value={user.member.toString()}
-                                options={[{key: 'yes', value: 'true', label: 'Yes'}, {key: 'no', value: 'false', label: 'No'}]} />
+                                options={[{ key: 'yes', value: 'true', label: 'Yes' }, { key: 'no', value: 'false', label: 'No' }]} />
                             <ControlGroup handleChange={this.handleChange} name="first" label="First Name" type="text" required={true} value={user.first} />
                             <ControlGroup handleChange={this.handleChange} name="last" label="Last Name" type="text" required={true} value={user.last} />
                             <ControlGroup handleChange={this.handleChange} name="address1" label="Address 1" type="text" required={true} value={user.address1} />
@@ -174,7 +186,7 @@ export class Register extends React.Component<RegisterProps & IProps, any> {
                             <ControlGroup handleChange={this.handleChange} name="city" label="City" type="text" required={true} value={user.city} />
                             <ControlGroup handleChange={this.handleChange} name="state" label="State/Province" type="text" required={true} value={user.state} />
                             <ControlGroup handleChange={this.handleChange} name="zip" label="Zip/Postal Code" type="text" required={true} value={user.zip} />
-                            <ControlGroup handleChange={this.handleChange} name="country" label="Country" type="select" required={true} value={user.country} 
+                            <ControlGroup handleChange={this.handleChange} name="country" label="Country" type="select" required={true} value={user.country}
                                 options={[{ key: 'us', value: 'us', label: 'USA' }, { key: 'canada', value: 'canada', label: 'Canada' }]} />
                             <ControlGroup handleChange={this.handleChange} name="email" label="Email" type="text" required={true} value={user.email} />
                             <ControlGroup handleChange={this.handleChange} name="phone" label="Phone Number" type="text" required={true} value={user.phone} />
@@ -191,7 +203,7 @@ export class Register extends React.Component<RegisterProps & IProps, any> {
                             <legend>Do you have a coupon?</legend>
                             <div className="pure-control-group">
                                 <label htmlFor="coupon">Coupon code (optional)</label>
-                                <input type="text" name="coupon" value={this.props.register.coupon} onChange={this.handleCoupon} placeholder="Enter code..." />
+                                <input type="text" name="coupon" value={this.props.register.registration.coupon} onChange={this.handleCoupon} placeholder="Enter code..." />
                                 <span className="pure-form-message-inline">{this.props.register.couponmessage}</span>
                             </div>
                             <div className="pure-controls">
@@ -211,7 +223,7 @@ export class Register extends React.Component<RegisterProps & IProps, any> {
                                     <input type="checkbox" name="paypal-go" onClick={this.setupButton} /> All of my information is correct
                                 </label>
 
-                                <button type="button" className="pure-button pure-button-primary" id="paypal-button">Submit</button>
+                                <button type="button" className="pure-button pure-button-primary" id="paypal-button" disabled={this.state.disabled}>Submit</button>
                             </div>
                         </fieldset>
                     </form>

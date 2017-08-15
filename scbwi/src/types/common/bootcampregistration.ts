@@ -9,4 +9,5 @@ export class BootcampRegistration extends Base {
     paid?: Date;
     cleared?: Date;
     nonce?: string;
+    coupon?: string;
 }

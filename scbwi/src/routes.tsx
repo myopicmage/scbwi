@@ -5,13 +5,14 @@ import 'scss/app.scss';
 
 import { Home } from 'components/common';
 import { Admin } from 'components/admin';
-import { Register } from 'components/register';
+import { Register, Success } from 'components/register';
 
 export const Routes =
     <div className="main pure-g">
         <Route exact path="/" component={Home} />
         <Route path="/dashboard" component={Admin} />
         <Route path="/register" component={Register} />
+        <Route path="/success" component={Success} />
 
         <footer className="pure-u-1">
             <div className="footer">

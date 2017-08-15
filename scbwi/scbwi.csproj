@@ -9,39 +9,6 @@
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="src\actions\admin.ts" />
-    <None Remove="src\actions\register.ts" />
-    <None Remove="src\components\admin\admin.tsx" />
-    <None Remove="src\components\admin\bootcamps.tsx" />
-    <None Remove="src\components\admin\home.tsx" />
-    <None Remove="src\components\admin\index.ts" />
-    <None Remove="src\components\admin\nav.tsx" />
-    <None Remove="src\components\admin\newevent.tsx" />
-    <None Remove="src\components\common\home.tsx" />
-    <None Remove="src\components\common\icon.tsx" />
-    <None Remove="src\components\common\index.ts" />
-    <None Remove="src\components\common\mdown.tsx" />
-    <None Remove="src\components\register\index.ts" />
-    <None Remove="src\components\register\register.tsx" />
-    <None Remove="src\constants\admin.ts" />
-    <None Remove="src\constants\register.ts" />
-    <None Remove="src\epics\admin.ts" />
-    <None Remove="src\epics\register.ts" />
-    <None Remove="src\epics\utils.ts" />
-    <None Remove="src\index.tsx" />
-    <None Remove="src\reducers\admin.ts" />
-    <None Remove="src\reducers\register.ts" />
-    <None Remove="src\routes.tsx" />
-    <None Remove="src\types\admin\index.ts" />
-    <None Remove="src\types\common\base.ts" />
-    <None Remove="src\types\common\bootcamp.ts" />
-    <None Remove="src\types\common\index.ts" />
-    <None Remove="src\types\common\registration.ts" />
-    <None Remove="src\types\redux\iadminstore.ts" />
-    <None Remove="src\types\redux\index.ts" />
-    <None Remove="src\types\redux\iprops.ts" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="braintree" Version="3.8.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.0" />
@@ -53,41 +20,9 @@
     <PackageReference Include="newtonsoft.json" Version="10.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0-preview2-final" />
-    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0-preview2-final" />
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0-preview2-final" />
-    <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0-preview2-final" />
-  </ItemGroup>
-  <ItemGroup>
-    <TypeScriptCompile Include="src\actions\admin.ts" />
-    <TypeScriptCompile Include="src\actions\register.ts" />
-    <TypeScriptCompile Include="src\components\admin\admin.tsx" />
-    <TypeScriptCompile Include="src\components\admin\bootcamps.tsx" />
-    <TypeScriptCompile Include="src\components\admin\home.tsx" />
-    <TypeScriptCompile Include="src\components\admin\index.ts" />
-    <TypeScriptCompile Include="src\components\admin\nav.tsx" />
-    <TypeScriptCompile Include="src\components\admin\newevent.tsx" />
-    <TypeScriptCompile Include="src\components\common\home.tsx" />
-    <TypeScriptCompile Include="src\components\common\icon.tsx" />
-    <TypeScriptCompile Include="src\components\common\index.ts" />
-    <TypeScriptCompile Include="src\components\common\mdown.tsx" />
-    <TypeScriptCompile Include="src\components\register\index.ts" />
-    <TypeScriptCompile Include="src\components\register\register.tsx" />
-    <TypeScriptCompile Include="src\constants\admin.ts" />
-    <TypeScriptCompile Include="src\constants\register.ts" />
-    <TypeScriptCompile Include="src\epics\admin.ts" />
-    <TypeScriptCompile Include="src\epics\register.ts" />
-    <TypeScriptCompile Include="src\epics\utils.ts" />
-    <TypeScriptCompile Include="src\index.tsx" />
-    <TypeScriptCompile Include="src\reducers\admin.ts" />
-    <TypeScriptCompile Include="src\reducers\register.ts" />
-    <TypeScriptCompile Include="src\routes.tsx" />
-    <TypeScriptCompile Include="src\types\admin\index.ts" />
-    <TypeScriptCompile Include="src\types\common\base.ts" />
-    <TypeScriptCompile Include="src\types\common\bootcamp.ts" />
-    <TypeScriptCompile Include="src\types\common\index.ts" />
-    <TypeScriptCompile Include="src\types\redux\iadminstore.ts" />
-    <TypeScriptCompile Include="src\types\redux\index.ts" />
-    <TypeScriptCompile Include="src\types\redux\iprops.ts" />
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
   </ItemGroup>
 </Project>

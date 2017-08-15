@@ -11,6 +11,14 @@ namespace scbwi.Services {
             var subtotal = 0m;
             var total = 0.0m;
 
+            var bootcamp = _db.Bootcamps.SingleOrDefault(x => x.id == r.bootcampid);
+
+            if (bootcamp == null) {
+                subtotal = 115m;
+            } else {
+                subtotal = r.user.member ? bootcamp.memberprice : bootcamp.nonmemberprice;
+            }
+
             total = subtotal;
 
             if (!string.IsNullOrEmpty(r.coupon)) {

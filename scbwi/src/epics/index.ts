@@ -5,10 +5,14 @@ import {
 } from './admin';
 
 import {
-    fetchTokenEpic
+    fetchTokenEpic,
+    submitCouponEpic,
+    submitRegistrationEpic
 } from './register';
 
 export const rootEpic = combineEpics(
     fetchBootcampsEpic,
-    fetchTokenEpic
+    fetchTokenEpic,
+    submitCouponEpic,
+    submitRegistrationEpic
 );

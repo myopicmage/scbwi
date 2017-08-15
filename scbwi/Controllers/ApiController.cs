@@ -20,6 +20,7 @@ namespace scbwi.Controllers {
             _db = db;
             _logger = factory.CreateLogger("All");
             _gateway = new BraintreeGateway(secrets.Value.paypaltoken);
+            _calc = calc;
         }
 
         public IActionResult GetToken() {
@@ -36,12 +37,18 @@ namespace scbwi.Controllers {
 
         public IActionResult CalcTotal([FromBody] BootcampViewModel r) {
             if (!ModelState.IsValid) {
-                return Json("Whoops");
+                return Json(new { success = false, message = "Unable to read coupon", subtotal = r.subtotal, r.total });
             }
 
             (var subtotal, var total) = _calc.CalcTotals(r, _db);
 
-            return Json(new { subtotal = subtotal, total = total });
+            var message = "Invalid coupon";
+
+            if (total != subtotal) {
+                message = "Coupon is good";
+            }
+
+            return Json(new { success = true, message = message, subtotal = subtotal, total = total });
         }
 
 
@@ -75,12 +82,6 @@ namespace scbwi.Controllers {
                     return Json(new { success = false, message = "something failed" });
                 }
 
-                reg.paid = DateTime.Now;
-
-                _db.BootcampRegistrations.Add(reg);
-
-                await _db.SaveChangesAsync();
-
                 /*try {
                     var emailResp = await _email.SendEmailAsync(reg.user.Email, "Successful Registration", reg.GenEmail(), $"{reg.user.firstname} {reg.user.lastname}");
 
@@ -93,6 +94,12 @@ namespace scbwi.Controllers {
                     _logger.LogWarning($"Failed to send confirmation email. Exception: {ex.Message}");
                 }*/
             }
+
+            reg.paid = DateTime.Now;
+
+            _db.BootcampRegistrations.Add(reg);
+
+            await _db.SaveChangesAsync();
 
             return Json(new { success = true });
         }
