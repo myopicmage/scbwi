@@ -7,5 +7,6 @@ namespace scbwi.Models {
     public class Secrets {
         public string secretkey { get; set; }
         public string paypaltoken { get; set; }
+        public string sendgridkey { get; set; }
     }
 }

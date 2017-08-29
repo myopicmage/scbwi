@@ -70,8 +70,8 @@ namespace scbwi {
             services.Configure<Secrets>(Configuration);
 
             // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<IEmailSender, MessageSender>();
+            services.AddTransient<ISmsSender, MessageSender>();
             services.AddTransient<PasswordHasher<ApplicationUser>>();
             services.AddTransient<ITotalCalculator, TotalCalculator>();
 

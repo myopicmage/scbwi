@@ -8,6 +8,7 @@ using scbwi.Models.Database;
 using Microsoft.Extensions.Options;
 using scbwi.Services;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace scbwi.Controllers {
     public class ApiController : Controller {
@@ -15,12 +16,14 @@ namespace scbwi.Controllers {
         private readonly ILogger _logger;
         private readonly ScbwiContext _db;
         private readonly ITotalCalculator _calc;
+        private readonly IEmailSender _email;
 
-        public ApiController(ScbwiContext db, ILoggerFactory factory, IOptions<Secrets> secrets, ITotalCalculator calc) {
+        public ApiController(ScbwiContext db, ILoggerFactory factory, IOptions<Secrets> secrets, ITotalCalculator calc, IEmailSender sender) {
             _db = db;
             _logger = factory.CreateLogger("All");
             _gateway = new BraintreeGateway(secrets.Value.paypaltoken);
             _calc = calc;
+            _email = sender;
         }
 
         public IActionResult GetToken() {
@@ -54,7 +57,8 @@ namespace scbwi.Controllers {
 
         public async Task<IActionResult> Register([FromBody] BootcampViewModel r) {
             var reg = new BootcampRegistration(r) {
-                coupon = _db.Coupons.SingleOrDefault(x => x.text == r.coupon)
+                coupon = _db.Coupons.SingleOrDefault(x => x.text == r.coupon),
+                bootcampid = r.bootcampid
             };
 
             (var subtotal, var total) = _calc.CalcTotals(r, _db);
@@ -82,17 +86,9 @@ namespace scbwi.Controllers {
                     return Json(new { success = false, message = "something failed" });
                 }
 
-                /*try {
-                    var emailResp = await _email.SendEmailAsync(reg.user.Email, "Successful Registration", reg.GenEmail(), $"{reg.user.firstname} {reg.user.lastname}");
+                r.bootcamp = _db.Bootcamps.SingleOrDefault(x => x.id == r.bootcampid);
 
-                    if (!emailResp.IsSuccessStatusCode) {
-                        var resp = await emailResp.Content.ReadAsStringAsync();
-
-                        _logger.LogWarning($"Failed to send confirmation email to {reg.user.Email}. Reason: {resp}");
-                    }
-                } catch (Exception ex) {
-                    _logger.LogWarning($"Failed to send confirmation email. Exception: {ex.Message}");
-                }*/
+                var emailResult = await SendEmailAsync(r);
             }
 
             reg.paid = DateTime.Now;
@@ -102,6 +98,43 @@ namespace scbwi.Controllers {
             await _db.SaveChangesAsync();
 
             return Json(new { success = true });
+        }
+
+        /*public async Task<IActionResult> TestEmail(int id) {
+            var reg = _db.BootcampRegistrations.Include(x => x.user).SingleOrDefault(x => x.id == id);
+
+            var r = new BootcampViewModel {
+                bootcamp = _db.Bootcamps.SingleOrDefault(x => x.id == reg.bootcampid),
+                user = reg.user,
+                coupon = reg.coupon?.text,
+                subtotal = reg.subtotal,
+                total = reg.total
+            };
+
+            var emailResult = await SendEmailAsync(r);
+
+            return Json(emailResult);
+        }*/
+
+        private async Task<bool> SendEmailAsync(BootcampViewModel reg) {
+            try {
+                var html = await _email.GenerateEmailHtml("Email/Confirmation", reg);
+                var emailResp = await _email.SendEmailAsync("kcbernfeld@gmail.com", "Successful Registration", html, $"{reg.user.first} {reg.user.last}");
+
+                if (!emailResp.IsSuccessStatusCode) {
+                    var resp = await emailResp.Content.ReadAsStringAsync();
+
+                    _logger.LogWarning($"Failed to send confirmation email to {reg.user.email}. Reason: {resp}");
+
+                    return false;
+                }
+
+                return true;
+            } catch (Exception ex) {
+                _logger.LogWarning($"Failed to send confirmation email. Exception: {ex.Message}");
+
+                return false;
+            }
         }
     }
 }

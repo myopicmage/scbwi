@@ -1,0 +1,63 @@
+﻿@model scbwi.Models.BootcampViewModel
+
+@{ 
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <h3>Congratulations! Your registration was successfully received.</h3>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td>@Model.user.first @Model.user.last</td>
+                </tr>
+                <tr>
+                    <td>Address</td>
+                    <td>
+                        @Model.user.address1<br />
+                        @Model.user.address2<br />
+                        @Model.user.city, @Model.user.state @Model.user.zip<br />
+                        @Model.user.country
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>@Model.user.email</td>
+                </tr>
+                <tr>
+                    <td>Phone</td>
+                    <td>@Model.user.phone</td>
+                </tr>
+                <tr>
+                    <td>Bootcamp</td>
+                    <td>
+                        @Model.bootcamp.date.ToShortDateString()<br />
+                        @Model.bootcamp.location - @Model.bootcamp.topic<br />
+                        @Model.bootcamp.address
+                    </td>
+                </tr>
+                <tr>
+                    <td>Subtotal</td>
+                    <td>$@Model.subtotal</td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td>$@Model.total</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            If you have any questions, please feel free to contact us at <a href="mailto:florida-ra@scbwi.org">florida-ra@scbwi.org</a>, or reply to this email.
+        </p>
+        <p>
+            We look forward to seeing you there!
+        </p>
+        <p>
+            SCBWI Florida
+        </p>
+    </body>
+</html>
