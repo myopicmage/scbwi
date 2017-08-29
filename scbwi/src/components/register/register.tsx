@@ -5,6 +5,7 @@ import { fetchBootcamps, setUserInfo, setRegistrationInfo, submitCoupon, getToke
 import { ControlGroup } from './controlgroup';
 import { MDown } from 'components/common';
 import * as braintree from 'braintree-web';
+import { Bootcamp } from 'types/common';
 
 interface RegisterProps {
     register: IRegisterStore
@@ -116,6 +117,16 @@ export class Register extends React.Component<RegisterProps & IProps, any> {
             });
         });
     }
+    
+    selectDay = (camp: Bootcamp) => {
+        let theDate = new Date(camp.date);
+
+        if (theDate.getHours() !== 0) {
+            return theDate.getDate() + 1;
+        } else {
+            return theDate.getDate();
+        }
+    }
 
     renderBootcamps = (day: number) => {
         const { register } = this.props;
@@ -127,7 +138,7 @@ export class Register extends React.Component<RegisterProps & IProps, any> {
                 </div>
             );
         } else if (register.bootcamps.length > 0) {
-            return register.bootcamps.filter(item => new Date(item.date).getDate() === day).map((item, index) =>
+            return register.bootcamps.filter(item => this.selectDay(item) === day).map((item, index) =>
                 <div
                     className={`pure-u-1 inline-flex camp-box ${register.registration.bootcampid === item.id ? 'selected' : ''}`} id={item.id ? item.id.toString() : index.toString()}
                     onClick={this.selectBootcamp}
