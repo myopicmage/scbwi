@@ -119,7 +119,7 @@ namespace scbwi.Controllers {
         private async Task<bool> SendEmailAsync(BootcampViewModel reg) {
             try {
                 var html = await _email.GenerateEmailHtml("Email/Confirmation", reg);
-                var emailResp = await _email.SendEmailAsync("kcbernfeld@gmail.com", "Successful Registration", html, $"{reg.user.first} {reg.user.last}");
+                var emailResp = await _email.SendEmailAsync(reg.user.email, "Successful Registration", html, $"{reg.user.first} {reg.user.last}");
 
                 if (!emailResp.IsSuccessStatusCode) {
                     var resp = await emailResp.Content.ReadAsStringAsync();
